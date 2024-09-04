@@ -66,7 +66,7 @@ Para desplegar MindMates en un entorno de producción, sigue estos pasos:
 | Diego Jorges                 | FrontEnd Developer    | [LinkedIn Diego](https://www.linkedin.com/in/diegojorges)        |
 | Francisco Jesus Sonocalla    | BackEnd Developer     | [LinkedIn Francisco](https://www.linkedin.com/in/franciscojesussonocalla) |
 | Rodrigo Santillan            | BackEnd Developer     | [LinkedIn Rodrigo](https://www.linkedin.com/in/rodrigosantillan) |
-| Jorge Suarez                 | Tester QA, PM         | [LinkedIn Jorge](https://www.linkedin.com/in/jorgesuarez)        |
+| Jorge Suarez                 | Tester QA, PM         | [LinkedIn Jorge](https://www.linkedin.com/in/jorgesuareztech)        |
 | Jorge G                      | Team Leader           | [LinkedIn Jorge G](https://www.linkedin.com/in/jorgeg)           |
 
 ### 8. **Instalación y Configuración**
