@@ -3,6 +3,9 @@ import * as yup from "yup";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {IconButton, InputAdornment, OutlinedInput} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import axios from "axios";
 
 const loginSchema = yup.object().shape({
     email:yup.string()
@@ -17,18 +20,35 @@ const loginSchema = yup.object().shape({
 });
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
-    const { login, handleSubmit, formState: { errors }, reset } = useForm(
+    const [errorMessage, setErrorMessage] = useState('');
+    const { register, handleSubmit, formState: { errors }, reset } = useForm(
         {
             resolver: yupResolver(loginSchema),
         }
     );
-    const onSubmitHandler = (formData)=>{
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
-        //Call api
-        console.log(formData);
+    const onSubmitHandler = async (formData)=>{
+        setErrorMessage('');
+        try {
+            //TODO: Call api
+            const response = await axios.post('https://localhost:8080/api/v1/auth/login', formData);
+
+            //
+            console.log(response.data);
+
+            const token = response.data.token;
+            localStorage.setItem('token', response.data.token);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        } catch (err) {
+            setErrorMessage('Error en el inicio de sesión. Por favor, verifica tus credenciales.');
+        }
 
         reset();
     };
+
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
             {/*Form Container*/}
@@ -43,24 +63,48 @@ export default function Login() {
                                    className="block mb-2 text-sm font-medium text-gray-900 text-left">
                                 Email:
                             </label>
-                            <input type="email"
-                                   name="email"
-                                   id="email"
-                                   className="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block"
-                                   placeholder="name@company.com"
-                                   required/>
+                            <OutlinedInput
+                                name="email"
+                                id="email"
+                                type="email"
+                                variant="outlined"
+                                placeholder="name@company.com"
+                                fullWidth
+                                hiddenLabel
+                                color="primary"
+                                {...register("email")}
+                                size="small"
+                            />
+                            <p className="mt-2 text-sm text-red-600">{errors.email?.message}</p>
                         </div>
                         <div>
                             <label htmlFor="password"
                                    className="block mb-2 text-sm font-medium text-gray-900">
                                 Contraseña:
                             </label>
-                            <input type="password"
-                                   name="password"
-                                   id="password"
-                                   placeholder="••••••••"
-                                   className="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600"
-                                   required/>
+                            <OutlinedInput
+                                name="password"
+                                id="password"
+                                type={showPassword ? 'text' : 'password'}
+                                variant="outlined"
+                                placeholder="••••••••"
+                                fullWidth
+                                hiddenLabel
+                                color="primary"
+                                {...register("password")}
+                                size="small"
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                            aria-label="toggle password visibility"
+                                        >
+                                            {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
                         </div>
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
@@ -85,10 +129,40 @@ export default function Login() {
                                 ¿Olvidaste tu contraseña?
                             </Link>
                         </div>
-                        <button type="submit"
-                                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            Ingresar
-                        </button>
+                        <div className="flex flex-col lg:flex-row lg:space-x-2 space-y-2 lg:space-y-0">
+                            <button type="button"
+                                    className="w-full lg:w-1/2 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
+                                <svg
+                                    aria-hidden="true"
+                                    className="native svg-icon iconGoogle mr-2"
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 18 18"
+                                >
+                                    <path
+                                        fill="#4285F4"
+                                        d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18"
+                                    />
+                                    <path
+                                        fill="#34A853"
+                                        d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17"
+                                    />
+                                    <path
+                                        fill="#FBBC05"
+                                        d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18z"
+                                    />
+                                    <path
+                                        fill="#EA4335"
+                                        d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.8 4.8 0 0 1 4.48-3.3"
+                                    />
+                                </svg>
+                                Ingresar con Google
+                            </button>
+                            <button type="submit"
+                                    className="w-full lg:w-1/2 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                Ingresar
+                            </button>
+                        </div>
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                             ¿No tenés cuenta todavía?
                             <Link

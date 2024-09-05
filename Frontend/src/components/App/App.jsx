@@ -4,6 +4,7 @@ import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import Blog from "../Blog/Blog.jsx";
 import ForgotPassword from "../ForgotPassword/ForgotPassword.jsx";
+import Scheduler from "../Scheduler/Scheduler.jsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
               <Route path="/forgotpass" element={<ForgotPassword/>}/>
+              <Route path="/scheduler" element={<Scheduler/>}/>
           </Routes>
       </div>
   )
