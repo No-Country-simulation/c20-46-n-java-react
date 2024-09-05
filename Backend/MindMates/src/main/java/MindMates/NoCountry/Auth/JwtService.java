@@ -1,4 +1,4 @@
-package com.c1645njava.NoCountry.security;
+package MindMates.NoCountry.Auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

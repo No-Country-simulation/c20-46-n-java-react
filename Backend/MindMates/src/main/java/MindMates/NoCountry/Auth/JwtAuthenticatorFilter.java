@@ -1,4 +1,4 @@
-package com.c1645njava.NoCountry.security;
+package MindMates.NoCountry.Auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
