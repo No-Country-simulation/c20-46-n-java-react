@@ -1,4 +1,4 @@
-package MindMates.NoCountry.Auth;
+package MindMates.NoCountry.auth;
 
 import com.c1645njava.NoCountry.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

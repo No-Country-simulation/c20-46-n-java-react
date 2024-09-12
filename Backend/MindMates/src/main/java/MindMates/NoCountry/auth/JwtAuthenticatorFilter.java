@@ -1,4 +1,4 @@
-package MindMates.NoCountry.Auth;
+package MindMates.NoCountry.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
