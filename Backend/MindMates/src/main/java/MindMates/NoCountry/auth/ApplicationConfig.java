@@ -1,6 +1,6 @@
 package MindMates.NoCountry.auth;
 
-import com.c1645njava.NoCountry.repository.UsuarioRepository;
+import MindMates.NoCountry.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ApplicationConfig {
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ApplicationConfig(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public ApplicationConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Bean
@@ -28,7 +28,7 @@ public class ApplicationConfig {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return usuarioRepository.findByCorreo(username)
+                return userRepository.findByCorreo(username)
                         .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
             }
         };
