@@ -12,14 +12,11 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final UserAuthService authService;
-    private final UserRepository userRepository;
+    @Autowired
+    private UserAuthService authService;
 
     @Autowired
-    public AuthController(UserAuthService authService, UserRepository userRepository) {
-        this.authService = authService;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @PostMapping("/registrar")
     public ResponseEntity<AuthenticationResponse> registrar(@RequestBody UserEntity usuarioRequest) {

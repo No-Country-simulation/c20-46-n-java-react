@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+
+@Entity
+@Table(name = "users")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -16,9 +19,9 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String correo;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private UserRolesEnum role;
 
+    @Enumerated(EnumType.STRING)
+    private UserRolesEnum role = UserRolesEnum.USER;
 
     public UserEntity() {}
 

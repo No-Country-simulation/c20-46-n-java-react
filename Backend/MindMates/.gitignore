@@ -42,3 +42,4 @@ release.properties
 # Maven Wrapper
 .mvn/
 mvnw*
+/src/main/java/MindMates/NoCountry/utils/
