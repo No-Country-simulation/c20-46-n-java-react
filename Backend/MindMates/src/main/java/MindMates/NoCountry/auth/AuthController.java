@@ -3,7 +3,9 @@ package MindMates.NoCountry.auth;
 import MindMates.NoCountry.user.UserAuthService;
 import MindMates.NoCountry.user.UserEntity;
 import MindMates.NoCountry.user.UserRepository;
+import MindMates.NoCountry.user.UserRolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,23 +21,15 @@ public class AuthController {
     private UserRepository userRepository;
 
     @PostMapping("/registrar")
-    public ResponseEntity<AuthenticationResponse> registrar(@RequestBody UserEntity usuarioRequest) {
-        return ResponseEntity.ok(authService.registrar(usuarioRequest));
-    }
+    public ResponseEntity<String> registrar(@RequestBody UserEntity usuarioRequest) {
 
+        authService.registrar(usuarioRequest);
+
+        return ResponseEntity.ok("Usuario creado exitosamente");
+    }
 
     @PostMapping("/autenticar")
     public ResponseEntity<AuthenticationResponse> autenticar(@RequestBody UserEntity usuarioRequest) {
         return ResponseEntity.ok(authService.autenticar(usuarioRequest));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody LoginDTO loginDTO) {
-        UserEntity usuario = userRepository.findByCorreo(loginDTO.email()).orElseThrow();
-        if (Objects.equals(loginDTO.password(), usuario.getPassword())) {
-            return ResponseEntity.ok(true);
-        } else {
-            return ResponseEntity.ok(false);
-        }
     }
 }

@@ -2,6 +2,7 @@ package MindMates.NoCountry.user;
 
 import MindMates.NoCountry.auth.AuthenticationResponse;
 import MindMates.NoCountry.auth.JwtService;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,12 +29,14 @@ public class UserAuthService {
     }
 
     @Transactional
-    public AuthenticationResponse registrar(UserEntity usuario) {
+    public void registrar(UserEntity usuario) {
+        if (userRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
+            throw new EntityExistsException("Error: Ya existe un usuario con este mail");
+        }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuario.setRole(UserRolesEnum.USER);
+
         userRepository.save(usuario);
-        String token = jwtService.generateToken(usuario);
-        return new AuthenticationResponse(token);
     }
 
     public AuthenticationResponse autenticar(UserEntity usuario) {
