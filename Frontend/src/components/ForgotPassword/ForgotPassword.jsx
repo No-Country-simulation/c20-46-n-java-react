@@ -10,7 +10,7 @@ const forgotPasswordSchema = yup.object().shape({
         .email("Formato incorrecto de email")
         .required("Complete el email")
 });
-export default function ForgotPassword() {
+export default function ForgotPassword({onLoginClick}) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm(
         {
             resolver: yupResolver(forgotPasswordSchema),
@@ -25,7 +25,7 @@ export default function ForgotPassword() {
     };
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
-            <div className="w-full rounded-lg shadow">
+            <div className="w-full">
                 <div className="p-6 space-y-4 md:space-y-6">
                     <h1 className="text-xl text-left font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         Recuperación de contraseña
@@ -53,7 +53,12 @@ export default function ForgotPassword() {
                             />
                             <p className="mt-2 text-sm text-red-600">{errors.email?.message}</p>
                         </div>
-                        <div className="flex justify-end">
+                        <div className="flex justify-between">
+                            <button
+                                className="ml-2 font-medium text-primary-600 hover:underline"
+                                onClick={onLoginClick}>
+                                Volver
+                            </button>
                             <button
                                 type="submit"
                                 className="flex items-center text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5"
@@ -63,11 +68,6 @@ export default function ForgotPassword() {
                             </button>
                         </div>
                     </form>
-                    <Link
-                        className="ml-2 font-medium text-primary-600 hover:underline"
-                        to="/login">
-                        Volver
-                    </Link>
                 </div>
             </div>
         </div>

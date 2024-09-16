@@ -4,52 +4,86 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import axios from "axios";
 
 const registerSchema = yup.object().shape({
-    name:yup.string()
+    nombre:yup.string()
         .matches(/^[A-Za-z ]*$/, 'Debe tener caracteres alphanuméricos')
         .max(40)
         .required("Complete el nombre"),
-    email:yup.string()
+    correo:yup.string()
         .email("Formato incorrecto de email")
         .required("Complete el email"),
     password: yup.string()
-        .required('Complete la contraseña')
+        .required('Complete la contraseña'),
+        /* TODO: Uncomment this
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             "Debe tener un mínimo de 8 caracteres y contener al menos una letra mayúscula, una minúscula, un número y un carácter especial."
-        ),
+        ),*/
     confirmPassword: yup.string()
         .required('Complete de nuevo la contraseña')
         .oneOf([yup.ref('password')], 'Ambas contraseñas deben coincidir')
 });
 
-export default function Register() {
+export default function Register({onLoginClick}) {
     const [showPassword, setShowPassword] = useState(false);
+    const [alert, setAlert] = useState({ type: '', message: '' });
+    const [showAlert, setShowAlert] = useState(false)
+    const alertStyles = {
+        success: 'bg-green-100 text-green-800 border-green-500',
+        error: 'bg-red-100 text-red-800 border-red-500',
+        info: 'bg-blue-100 text-blue-800 border-blue-500',
+    };
     const { register, handleSubmit, formState: { errors }, reset } = useForm(
         {
             resolver: yupResolver(registerSchema),
         }
     );
-    const onSubmitHandler = (formData)=>{
 
-        //TODO: Call api
+    useEffect(() => {
+        if (showAlert) {
+            const timer = setTimeout(() => {
+                setAlert({ type: '', message: '' });
+                setShowAlert(false)
+            }, 4000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showAlert]);
+
+    const onSubmitHandler = async (formData)=>{
         console.log(formData);
-
-        reset();
+        try{
+            const response = await axios.post("http://localhost:8001/api/auth/registrar", formData);
+            console.log(response.data);
+            setAlert({ type: 'success', message: response.data});
+        }catch (error) {
+            console.log(error)
+            if (error.response) {
+                if (error.response.status >= 400) {
+                    setAlert({ type: 'error', message: error.response.data});
+                }
+            }else{
+                setAlert({ type: 'error', message: "Error: No se puede realizar la petición"});
+            }
+        }finally {
+            reset();
+        }
+        setShowAlert(true)
     };
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
     return(
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
-            {/*Form Container*/}
-            <div className="w-full rounded-lg shadow">
+        <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto">
+            <div className="w-full">
                 <div className="p-6 space-y-4 md:space-y-6">
                     <h1 className="text-xl text-left font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         Registra tu cuenta
                     </h1>
+                    {/*Form*/}
                     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmitHandler)}>
                         <div>
                             <label htmlFor="name"
@@ -57,7 +91,7 @@ export default function Register() {
                                 Nombre Completo:
                             </label>
                             <OutlinedInput
-                                name="name"
+                                name="nombre"
                                 id="name"
                                 type="text"
                                 variant="outlined"
@@ -66,10 +100,10 @@ export default function Register() {
                                 hiddenLabel
                                 color="primary"
                                 required
-                                {...register("name")}
+                                {...register("nombre")}
                                 size="small"
                             />
-                            <p className="mt-2 text-sm text-red-600">{errors.name?.message}</p>
+                            <p className="mt-2 text-sm text-red-600">{errors.nombre?.message}</p>
                         </div>
                         <div>
                             <label htmlFor="email"
@@ -77,7 +111,7 @@ export default function Register() {
                                 Email:
                             </label>
                             <OutlinedInput
-                                name="email"
+                                name="correo"
                                 id="email"
                                 type="email"
                                 variant="outlined"
@@ -86,10 +120,10 @@ export default function Register() {
                                 hiddenLabel
                                 color="primary"
                                 required
-                                {...register("email")}
+                                {...register("correo")}
                                 size="small"
                             />
-                            <p className="mt-2 text-sm text-red-600">{errors.email?.message}</p>
+                            <p className="mt-2 text-sm text-red-600">{errors.correo?.message}</p>
                         </div>
                         <div>
                             <label htmlFor="password"
@@ -153,8 +187,7 @@ export default function Register() {
                             <p className="mt-2 text-sm text-red-600">{errors.confirmPassword?.message}</p>
                         </div>
                         <div className="flex flex-col lg:flex-row lg:space-x-2 space-y-2 lg:space-y-0">
-                            <button type="button"
-                                    className="w-full lg:w-1/2 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
+                            <button onClick={(e)=>{e.preventDefault();}} className="w-full lg:w-1/2 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
                                 <svg
                                     aria-hidden="true"
                                     className="native svg-icon iconGoogle mr-2"
@@ -186,12 +219,21 @@ export default function Register() {
                                 Registrar
                             </button>
                         </div>
-                        <Link
-                            className="ml-2 font-medium text-primary-600 hover:underline"
-                            to="/login">
+                        <button
+                            className="mt-3 ml-2 font-medium text-primary-600 hover:underline"
+                            onClick={(e)=>{
+                                e.preventDefault();
+                                onLoginClick()
+                            }}>
                             Volver
-                        </Link>
+                        </button>
                     </form>
+                    {/* Alert */}
+                    {showAlert && (
+                        <div className={`mt-4 p-4 border rounded ${alertStyles[alert.type]}`}>
+                            {alert.message}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

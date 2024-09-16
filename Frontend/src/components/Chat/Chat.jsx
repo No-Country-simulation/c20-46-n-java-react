@@ -2,14 +2,21 @@ import PersonIcon from '@mui/icons-material/Person';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DoneIcon from '@mui/icons-material/Done';
 import {OutlinedInput} from "@mui/material";
-
+import {useContext} from "react";
+import { AuthContext } from '../../hooks/AuthProvider.jsx';
+import {Navigate} from "react-router-dom";
 /**
  *
  *
  * */
 export default function Chat(){
+    const { token, loading } = useContext(AuthContext);
+
+    /* if (!token) {
+        return <Navigate to="/login" replace />;
+    } */
     return (
-        <div className="flex h-screen">
+        <div className="flex h-screen" style={{ marginLeft: '4rem' }}>
             {/*Chats Online*/}
             <div className="flex flex-row w-64 bg-gray-100 border-r">
                 <div className="flex flex-col p-4 space-y-4">

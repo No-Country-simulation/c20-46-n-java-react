@@ -1,6 +1,6 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import * as yup from "yup";
-import {useState} from "react";
+import {useState,useEffect, useContext} from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {IconButton, InputAdornment, OutlinedInput} from "@mui/material";
@@ -12,15 +12,17 @@ const loginSchema = yup.object().shape({
         .email("Formato incorrecto de email")
         .required("Complete el email"),
     password: yup.string()
-        .required('Complete la contraseña')
+        .required('Complete la contraseña'),
+        /* TODO: Uncomment this
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             "Debe tener un mínimo de 8 caracteres y contener al menos una letra mayúscula, una minúscula, un número y un carácter especial."
-        )
+        ) */
 });
-export default function Login() {
+export default function Login({onRegisterClick,onChangePasswordClick}) {
     const [showPassword, setShowPassword] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [alert, setAlert] = useState({ type: '', message: '' });
+    const [showAlert, setShowAlert] = useState(false)
     const { register, handleSubmit, formState: { errors }, reset } = useForm(
         {
             resolver: yupResolver(loginSchema),
@@ -29,34 +31,62 @@ export default function Login() {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
+    const alertStyles = {
+        success: 'bg-green-100 text-green-800 border-green-500',
+        error: 'bg-red-100 text-red-800 border-red-500',
+        info: 'bg-blue-100 text-blue-800 border-blue-500',
+    };
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (showAlert) {
+            const timer = setTimeout(() => {
+                setAlert({ type: '', message: '' });
+                setShowAlert(false)
+            }, 4000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showAlert]);
 
     const onSubmitHandler = async (formData)=>{
-        setErrorMessage('');
-        try {
-            //TODO: Call api
-            const response = await axios.post('https://localhost:8080/api/v1/auth/login', formData);
+        console.log(formData);
+        try{
+            const response = await axios.post("http://localhost:8001/api/auth/login", formData);
 
-            //
             console.log(response.data);
 
-            const token = response.data.token;
-            localStorage.setItem('token', response.data.token);
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        } catch (err) {
-            setErrorMessage('Error en el inicio de sesión. Por favor, verifica tus credenciales.');
+            //Save token
+            /*const token = response.data.token;
+            setToken(token);
+            localStorage.setItem('token', token);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; */
+        }catch (error) {
+            console.log(error)
+           /*  setToken(null);
+            localStorage.removeItem("token"); */
+            if (error.response) {
+                if (error.response.status >= 400) {
+                    setAlert({ type: 'error', message: error.response.data});
+                }
+            }else{
+                setAlert({ type: 'error', message: "Error: No se puede realizar la petición"});
+            }
+        }finally {
+            reset();
         }
-
-        reset();
+        setShowAlert(true)
     };
 
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
-            {/*Form Container*/}
-            <div className="w-full rounded-lg shadow">
+            <div className="w-full">
                 <div className="p-6 space-y-4 md:space-y-6">
                     <h1 className="text-xl text-left font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         Ingresa a tu cuenta
                     </h1>
+                    {/*Form Container*/}
                     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmitHandler)}>
                         <div>
                             <label htmlFor="email"
@@ -105,6 +135,7 @@ export default function Login() {
                                     </InputAdornment>
                                 }
                             />
+                            <p className="mt-2 text-sm text-red-600">{errors.password?.message}</p>
                         </div>
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
@@ -113,7 +144,7 @@ export default function Login() {
                                            aria-describedby="remember"
                                            type="checkbox"
                                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
-                                           required/>
+                                        />
                                 </div>
                                 <div className="ml-3 text-sm">
                                     <label
@@ -123,14 +154,15 @@ export default function Login() {
                                     </label>
                                 </div>
                             </div>
-                            <Link
+                            <button
                                 className="ml-2 font-medium text-primary-600 hover:underline"
-                                to="/forgotpass">
+                                onClick={onChangePasswordClick}>
                                 ¿Olvidaste tu contraseña?
-                            </Link>
+                            </button>
                         </div>
                         <div className="flex flex-col lg:flex-row lg:space-x-2 space-y-2 lg:space-y-0">
                             <button type="button"
+                                    onClick={(e)=>{e.preventDefault();}}
                                     className="w-full lg:w-1/2 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
                                 <svg
                                     aria-hidden="true"
@@ -165,13 +197,19 @@ export default function Login() {
                         </div>
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                             ¿No tenés cuenta todavía?
-                            <Link
+                            <button
                                 className="ml-2 font-medium text-primary-600 hover:underline"
-                                to="/register">
+                                onClick={onRegisterClick}>
                                 Registrate
-                            </Link>
+                            </button>
                         </p>
                     </form>
+                    {/* Alert */}
+                    {showAlert && (
+                        <div className={`mt-4 p-4 border rounded ${alertStyles[alert.type]}`}>
+                            {alert.message}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
