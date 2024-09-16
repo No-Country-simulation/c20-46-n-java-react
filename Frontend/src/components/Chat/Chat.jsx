@@ -2,19 +2,20 @@ import PersonIcon from '@mui/icons-material/Person';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DoneIcon from '@mui/icons-material/Done';
 import {OutlinedInput} from "@mui/material";
-import {useContext} from "react";
-import { AuthContext } from '../../hooks/AuthProvider.jsx';
+import { useAuth } from '../../hooks/AuthProvider';
 import {Navigate} from "react-router-dom";
+
 /**
  *
  *
  * */
 export default function Chat(){
-    const { token, loading } = useContext(AuthContext);
+    const { token} = useAuth();
 
-    /* if (!token) {
-        return <Navigate to="/login" replace />;
-    } */
+    if (!token) {
+        return <Navigate to="/" replace/>;
+    }
+
     return (
         <div className="flex h-screen" style={{ marginLeft: '4rem' }}>
             {/*Chats Online*/}

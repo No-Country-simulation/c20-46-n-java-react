@@ -16,12 +16,11 @@ const registerSchema = yup.object().shape({
         .email("Formato incorrecto de email")
         .required("Complete el email"),
     password: yup.string()
-        .required('Complete la contraseña'),
-        /* TODO: Uncomment this
+        .required('Complete la contraseña')
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             "Debe tener un mínimo de 8 caracteres y contener al menos una letra mayúscula, una minúscula, un número y un carácter especial."
-        ),*/
+        ),
     confirmPassword: yup.string()
         .required('Complete de nuevo la contraseña')
         .oneOf([yup.ref('password')], 'Ambas contraseñas deben coincidir')

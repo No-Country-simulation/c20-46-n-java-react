@@ -17,7 +17,7 @@ const navItems = [
     { to: '/blog', label: 'Blog', icon: <BookIcon /> }
 ];
 
-export default function Navbar() {
+export default function SideBar() {
     const location = useLocation();
 
     return (

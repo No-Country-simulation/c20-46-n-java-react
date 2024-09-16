@@ -6,23 +6,26 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {IconButton, InputAdornment, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import axios from "axios";
+import { useAuth } from '../../hooks/AuthProvider';
 
 const loginSchema = yup.object().shape({
-    email:yup.string()
+    correo:yup.string()
         .email("Formato incorrecto de email")
         .required("Complete el email"),
     password: yup.string()
-        .required('Complete la contraseña'),
-        /* TODO: Uncomment this
+        .required('Complete la contraseña')
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             "Debe tener un mínimo de 8 caracteres y contener al menos una letra mayúscula, una minúscula, un número y un carácter especial."
-        ) */
+        ) //Ex@mple123
 });
-export default function Login({onRegisterClick,onChangePasswordClick}) {
+export default function Login({onRegisterClick,onChangePasswordClick, handleDialogClose}) {
     const [showPassword, setShowPassword] = useState(false);
     const [alert, setAlert] = useState({ type: '', message: '' });
     const [showAlert, setShowAlert] = useState(false)
+    const navigate = useNavigate();
+    const { setToken } = useAuth();
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm(
         {
             resolver: yupResolver(loginSchema),
@@ -36,8 +39,6 @@ export default function Login({onRegisterClick,onChangePasswordClick}) {
         error: 'bg-red-100 text-red-800 border-red-500',
         info: 'bg-blue-100 text-blue-800 border-blue-500',
     };
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (showAlert) {
@@ -53,19 +54,17 @@ export default function Login({onRegisterClick,onChangePasswordClick}) {
     const onSubmitHandler = async (formData)=>{
         console.log(formData);
         try{
-            const response = await axios.post("http://localhost:8001/api/auth/login", formData);
-
-            console.log(response.data);
+            const response = await axios.post("http://localhost:8001/api/auth/autenticar", formData);
 
             //Save token
-            /*const token = response.data.token;
-            setToken(token);
-            localStorage.setItem('token', token);
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; */
+            setToken(response.data.token);
+            
+            handleDialogClose();
+            navigate("/chat");
         }catch (error) {
             console.log(error)
-           /*  setToken(null);
-            localStorage.removeItem("token"); */
+            setToken(null);
+
             if (error.response) {
                 if (error.response.status >= 400) {
                     setAlert({ type: 'error', message: error.response.data});
@@ -73,10 +72,11 @@ export default function Login({onRegisterClick,onChangePasswordClick}) {
             }else{
                 setAlert({ type: 'error', message: "Error: No se puede realizar la petición"});
             }
+
+            setShowAlert(true)
         }finally {
             reset();
         }
-        setShowAlert(true)
     };
 
     return (
@@ -94,7 +94,7 @@ export default function Login({onRegisterClick,onChangePasswordClick}) {
                                 Email:
                             </label>
                             <OutlinedInput
-                                name="email"
+                                name="correo"
                                 id="email"
                                 type="email"
                                 variant="outlined"
@@ -102,10 +102,10 @@ export default function Login({onRegisterClick,onChangePasswordClick}) {
                                 fullWidth
                                 hiddenLabel
                                 color="primary"
-                                {...register("email")}
+                                {...register("correo")}
                                 size="small"
                             />
-                            <p className="mt-2 text-sm text-red-600">{errors.email?.message}</p>
+                            <p className="mt-2 text-sm text-red-600">{errors.correo?.message}</p>
                         </div>
                         <div>
                             <label htmlFor="password"
