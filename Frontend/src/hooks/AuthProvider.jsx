@@ -3,8 +3,14 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
+//TODO: Agregar estado usuario
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState({
+    id:"",
+    nombre:"",
+    correo:""
+  });
 
   useEffect(() => {
     if (token) {
@@ -17,7 +23,7 @@ const AuthProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken}}>
+    <AuthContext.Provider value={{ token, setToken, user, setUser}}>
       {children}
     </AuthContext.Provider>
   );

@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 /HELP.md
 /src/utils/
+
+.env
+.env.production

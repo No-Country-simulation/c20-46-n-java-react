@@ -6,6 +6,7 @@ import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useState, useEffect} from "react";
 import axios from "axios";
+import api from "../../api/api"
 
 const registerSchema = yup.object().shape({
     nombre:yup.string()
@@ -55,7 +56,7 @@ export default function Register({onLoginClick}) {
     const onSubmitHandler = async (formData)=>{
         console.log(formData);
         try{
-            const response = await axios.post("http://localhost:8001/api/auth/registrar", formData);
+            const response = await api.post("/api/auth/registrar", formData);
             console.log(response.data);
             setAlert({ type: 'success', message: response.data});
         }catch (error) {

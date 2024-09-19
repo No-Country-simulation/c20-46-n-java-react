@@ -5,6 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import Login from "../Login/Login.jsx";
 import Register from "../Register/Register.jsx";
 import ForgotPassword from "../ForgotPassword/ForgotPassword.jsx";
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function TopBar() {
     const [open, setOpen] = useState(false);
@@ -43,6 +44,7 @@ export default function TopBar() {
                 <button 
                       onClick={handleClickOpen}
                       className="text-white bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    <PersonIcon className="mr-2" fontSize="small" />
                     Ingresar
                 </button>
               </li>
@@ -63,6 +65,7 @@ export default function TopBar() {
                 <Login
                     onRegisterClick={handleRegisterClick}
                     onChangePasswordClick={handleChangePasswordClick}
+                    handleDialogClose={handleClose}
                 />
             )}
             {view === 'register' && (

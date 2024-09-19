@@ -7,6 +7,7 @@ import {IconButton, InputAdornment, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import axios from "axios";
 import { useAuth } from '../../hooks/AuthProvider';
+import api from "../../api/api";
 
 const loginSchema = yup.object().shape({
     correo:yup.string()
@@ -24,7 +25,7 @@ export default function Login({onRegisterClick,onChangePasswordClick, handleDial
     const [alert, setAlert] = useState({ type: '', message: '' });
     const [showAlert, setShowAlert] = useState(false)
     const navigate = useNavigate();
-    const { setToken } = useAuth();
+    const { setToken, setUser } = useAuth();
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm(
         {
@@ -53,12 +54,15 @@ export default function Login({onRegisterClick,onChangePasswordClick, handleDial
 
     const onSubmitHandler = async (formData)=>{
         console.log(formData);
+
         try{
-            const response = await axios.post("http://localhost:8001/api/auth/autenticar", formData);
+            const response = await api.post("/api/auth/autenticar", formData);
 
             //Save token
             setToken(response.data.token);
-            
+            setUser(response.data.user);
+
+        
             handleDialogClose();
             navigate("/chat");
         }catch (error) {
