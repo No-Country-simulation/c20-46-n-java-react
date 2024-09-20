@@ -11,17 +11,16 @@ MindMates está dirigido a:
 - Personas que buscan apoyo emocional o psicológico.
 - Individuos afectados por la pandemia de COVID-19 y otras situaciones que han provocado aislamiento social.
 - Aquellos que desean compartir experiencias y encontrar una comunidad de apoyo.
-- Profesionales de la salud interesados en plataformas digitales de bienestar.
 
 ### 3. **Casos de Uso**
 - **Caso 1: Usuario busca apoyo emocional inmediato.**
   - El usuario se conecta a la plataforma, inicia una conversación en tiempo real con otro miembro de la comunidad y recibe el apoyo necesario.
   
 - **Caso 2: Usuario organiza sus actividades de bienestar.**
-  - El usuario utiliza la agenda de la plataforma para planificar sesiones de autocuidado, eventos de grupo y recordatorios de actividades de bienestar.
+  - El usuario utiliza la agenda de la plataforma para planificar futuras sesiones de chat.
   
 - **Caso 3: Usuario accede a recursos informativos.**
-  - El usuario navega por el blog de recursos para leer artículos sobre salud mental, ver videos motivacionales y participar en discusiones relacionadas.
+  - El usuario explora el blog de recursos en busca de artículos sobre bienestar emocional, videos motivacionales y consejos prácticos para el manejo del estrés. Además, puede dejar sus comentarios y calificar los artículos para fomentar una conversación empática con otros miembros de la comunidad.
 
 ### 4. **Requerimientos Funcionales**
 - **Registro e Inicio de Sesión:**
@@ -41,32 +40,17 @@ MindMates está dirigido a:
   - Permitir a los usuarios buscar y filtrar contenido por categorías y tags.
 
 ### 5. **Uso**
-Una vez que la aplicación esté en funcionamiento, puedes acceder a MindMates desde tu navegador web en `http://localhost:3000`. A continuación, podrás registrarte, iniciar sesión, gestionar tu agenda, navegar por el blog de recursos y comunicarte en tiempo real con otros usuarios.
+Una vez que la aplicación esté en funcionamiento, puedes acceder a MindMates desde tu navegador web en `https://mindmates-production.up.railway.app`. A continuación, podrás registrarte, iniciar sesión, gestionar tu agenda, navegar por el blog de recursos y comunicarte en tiempo real con otros usuarios.
 
-### 6. **Despliegue**
-Para desplegar MindMates en un entorno de producción, sigue estos pasos:
-
-1. **Configura las variables de entorno** en un archivo `.env` similar al que se usa en desarrollo.
-2. **Construye el proyecto para producción:**
-   ```bash
-   npm run build
-   ```
-3. **Configura un servidor web** para servir los archivos estáticos generados.
-4. **Configura la base de datos** MongoDB en un entorno de producción.
-5. **Inicia la aplicación** en el servidor utilizando un proceso administrador como PM2:
-   ```bash
-   pm2 start npm --name "MindMates" -- start
-   ```
-
-### 7. **Equipo**
+### 6. **Equipo**
 | Nombre                      | Rol                   | LinkedIn                                           |
 |-----------------------------|-----------------------|---------------------------------------------------|
-| Diego Jorges                 | FrontEnd Developer    | [LinkedIn Diego](https://www.linkedin.com/in/diegojorges)        |
+| Diego Jorges                 | FullStack Developer    | [LinkedIn Diego](www.linkedin.com/in/diego-agustin-jorges)        |
 | Rodrigo Santillan            | BackEnd Developer     | [LinkedIn Rodrigo](https://www.linkedin.com/in/rodrigosantillan) |
 | Jorge Suarez                 | Tester QA, PM         | [LinkedIn Jorge](https://www.linkedin.com/in/jorgesuareztech)    |
 | Jorge Galleguillos           | Team Leader            | [LinkedIn Jorge G](https://www.linkedin.com/in/jorgeg)           |
 
-### 8. **Instalación y Configuración**
+### 7. **Instalación y Configuración del FrontEnd**
 Para ejecutar MindMates localmente, sigue estos pasos:
 
 1. **Clona el repositorio:**
@@ -76,7 +60,7 @@ Para ejecutar MindMates localmente, sigue estos pasos:
    
 2. **Navega al directorio del proyecto:**
    ```bash
-   cd c20-46-n-java-react
+   cd FrontEnd
    ```
 
 3. **Instala las dependencias:**
@@ -86,17 +70,15 @@ Para ejecutar MindMates localmente, sigue estos pasos:
 
 4. **Configura las variables de entorno:**
    Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
-   ```plaintext
-   MONGODB_URI=<tu_conexion_mongodb>
-   JWT_SECRET=<tu_secreto_jwt>
+   ``` .env
+   VITE_BACKEND_API=<tu_conexion_al_backend>
    ```
 
 5. **Inicia la aplicación:**
    ```bash
-   npm start
+   npm run dev
    ```
-
-### 9. **Contribuciones**
+### 8. **Contribuciones**
 Si deseas contribuir a MindMates, sigue estos pasos:
 
 1. **Fork el repositorio.**
@@ -114,9 +96,9 @@ Si deseas contribuir a MindMates, sigue estos pasos:
    ```
 5. **Abre un Pull Request.**
 
-### 10. **Licencia**
+### 9. **Licencia**
 MindMates se distribuye bajo la Licencia MIT. Para más detalles, consulta el archivo `LICENSE`.
 
-### 11. **Contacto**
+### 10. **Contacto**
 Para cualquier consulta o sugerencia, puedes contactarnos a través de [jorgesuarez.tech@gmail.com](mailto:jorgesuarez.tech@gmail.com).
 
