@@ -2,70 +2,17 @@ import { Button, Card, CardActions, CardContent, CardMedia, Rating, Typography }
 import SideBar from "../App/SideBar"
 import CommentIcon from '@mui/icons-material/Comment';
 import Footer from "../App/Footer";
-import { useState } from "react";
-import { useEffect } from "react";
-import api from "../../api/api";
+import { useState, useEffect } from "react";
+import articulos from "../../api/articulos";
+import categories from "../../api/categories";
+import posts from "../../api/posts";
 import { useAuth } from "../../hooks/AuthProvider";
 import { Navigate } from "react-router-dom";
-
-const categories = ['Ansiedad', 'Depresión', 'Apoyo Emocional', 'Terapias', 'Autoestima','Salud Mental',
-    'Bienestar', 'Superación Personal', 'Resiliencia','Sociabilizar', 'Motivación']
-const posts = [
-    {
-        title: 'Cómo lidiar con la ansiedad en tiempos de estrés',
-        description: 'Descubre estrategias efectivas para manejar la ansiedad durante situaciones estresantes.',
-        comments: 5
-    },
-    {
-        title: 'Consejos para mantener el equilibrio emocional',
-        description: 'Aprende cómo mantener un equilibrio emocional saludable en tu vida diaria.',
-        comments: 8
-    },
-    {
-        title: 'Estrategias para mejorar tu salud mental',
-        description: 'Explora técnicas y recursos para fortalecer tu bienestar mental.',
-        comments: 3
-    }
-]
-const articulos = [
-    {
-      title: 'Manejo de la Ansiedad',
-      description: 'Consejos prácticos para manejar la ansiedad en situaciones estresantes.',
-      image: '/Blog 1.jpg',
-      rating: 4,
-    },
-    {
-      title: 'Meditación para el Estrés',
-      description: 'Descubre cómo la meditación puede ayudarte a reducir el estrés diario.',
-      image: '/Blog 2.jpg',
-      rating: 3,
-    },
-    {
-      title: 'Diario de Gratitud',
-      description: 'Cómo mantener un diario de gratitud puede mejorar tu bienestar emocional.',
-      image: '/Blog 3.jpg',
-      rating: 5,
-    },
-  ]
+import { useNavigate } from 'react-router-dom';
 
 export default function Blog(){
     const { token} = useAuth();
-    /* const [message, setMessage] = useState('');
-
-    useEffect(() => {
-        // Realiza la solicitud GET al backend
-        const fetchHelloWorld = async () => {
-            try {
-                const response = await api.get('/api/home/hello');
-                setMessage(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setMessage('Error al obtener el mensaje');
-            }
-        };
-
-        fetchHelloWorld();
-    }, []); */
+    const navigate = useNavigate();
 
     if (!token) {
         return <Navigate to="/" replace/>;
@@ -75,7 +22,6 @@ export default function Blog(){
         <>
             <SideBar/>
             <main className="min-h-screen container px-3 py-8" style={{ marginLeft: '4rem' }}>
-                {/* <h1>{message}</h1> */}
                 <section className="mb-8">
                     <h2 className="text-2xl font-bold mb-4">Categorías</h2>
                     <div className="flex flex-wrap gap-2">
@@ -126,13 +72,24 @@ export default function Blog(){
                                     <Typography gutterBottom variant="h6" component="div">
                                         {article.title}
                                     </Typography>
-                                    <Typography variant="body2" color="text.secondary">
+                                    <Typography 
+                                        variant="body2" 
+                                        color="text.secondary" 
+                                        style={{
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            maxWidth: '100%',
+                                        }}
+                                    >
                                         {article.description}
                                     </Typography>
                                     <Rating value={article.rating} readOnly className="mt-2" />
                                 </CardContent>
                                 <CardActions>
-                                    <button className="bg-orange-400 text-white rounded-lg hover:bg-orange-500 p-2">
+                                    <button 
+                                         onClick={() => navigate(`/blog/${article.id}`)} 
+                                        className="bg-orange-400 text-white rounded-lg hover:bg-orange-500 p-2">
                                         Leer más
                                     </button>
                                 </CardActions>
