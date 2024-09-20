@@ -64,7 +64,7 @@ Para desplegar MindMates en un entorno de producción, sigue estos pasos:
 | Diego Jorges                 | FrontEnd Developer    | [LinkedIn Diego](https://www.linkedin.com/in/diegojorges)        |
 | Rodrigo Santillan            | BackEnd Developer     | [LinkedIn Rodrigo](https://www.linkedin.com/in/rodrigosantillan) |
 | Jorge Suarez                 | Tester QA, PM         | [LinkedIn Jorge](https://www.linkedin.com/in/jorgesuareztech)    |
-| Jorge G                      | Team Leader           | [LinkedIn Jorge G](https://www.linkedin.com/in/jorgeg)           |
+| Jorge Galleguillos           | Team Leader            | [LinkedIn Jorge G](https://www.linkedin.com/in/jorgeg)           |
 
 ### 8. **Instalación y Configuración**
 Para ejecutar MindMates localmente, sigue estos pasos:
@@ -118,5 +118,5 @@ Si deseas contribuir a MindMates, sigue estos pasos:
 MindMates se distribuye bajo la Licencia MIT. Para más detalles, consulta el archivo `LICENSE`.
 
 ### 11. **Contacto**
-Para cualquier consulta o sugerencia, puedes contactarnos a través de [contacto@mindmates.com](mailto:contacto@mindmates.com).
+Para cualquier consulta o sugerencia, puedes contactarnos a través de [jorgesuarez.tech@gmail.com](mailto:jorgesuarez.tech@gmail.com).
 
