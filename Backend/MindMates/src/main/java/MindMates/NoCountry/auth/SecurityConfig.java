@@ -1,7 +1,7 @@
 package MindMates.NoCountry.auth;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,6 +20,9 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Value("${websocket.allowed-origins}")
+    private String allowedOrigins;
+
     private final JwtAuthenticatorFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
@@ -32,6 +35,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> {
                     authz.requestMatchers("/**").permitAll();
                     /*authz.requestMatchers("/api/auth/**").permitAll();
@@ -40,24 +45,19 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider)
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
     private CorsConfigurationSource corsConfigurationSource() {
         return request -> {
             CorsConfiguration ccfg = new CorsConfiguration();
-            ccfg.setAllowedOrigins(Arrays.asList("*"));//http://localhost:3000"));
+            ccfg.setAllowedOrigins(Arrays.asList(allowedOrigins));
+            ccfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
             ccfg.setAllowCredentials(true);
-            ccfg.setAllowedMethods(Arrays.asList("GET", "POST"));
-            ccfg.setAllowedHeaders(Collections.singletonList("*"));
-            //ccfg.setExposedHeaders(Arrays.asList("Authorization"));
-            //ccfg.setMaxAge(3600L);
+            ccfg.setAllowedHeaders(Arrays.asList("*"));
+            ccfg.setExposedHeaders(Arrays.asList("Authorization"));
+            ccfg.setMaxAge(3600L);
             return ccfg;
-
         };
-
     }
 }

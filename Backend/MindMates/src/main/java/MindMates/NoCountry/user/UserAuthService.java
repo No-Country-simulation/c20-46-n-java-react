@@ -48,6 +48,8 @@ public class UserAuthService {
         ); // Throws exception if user and password are not correct
         UserEntity authenticatedUser = userRepository.findByCorreo(usuario.getCorreo()).orElseThrow();
         String token = jwtService.generateToken(authenticatedUser);
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(
+                token,
+                new UserResponse(authenticatedUser.getId(), authenticatedUser.getNombre(),authenticatedUser.getCorreo()));
     }
 }
