@@ -11,17 +11,16 @@ MindMates está dirigido a:
 - Personas que buscan apoyo emocional o psicológico.
 - Individuos afectados por la pandemia de COVID-19 y otras situaciones que han provocado aislamiento social.
 - Aquellos que desean compartir experiencias y encontrar una comunidad de apoyo.
-- Profesionales de la salud interesados en plataformas digitales de bienestar.
 
 ### 3. **Casos de Uso**
 - **Caso 1: Usuario busca apoyo emocional inmediato.**
   - El usuario se conecta a la plataforma, inicia una conversación en tiempo real con otro miembro de la comunidad y recibe el apoyo necesario.
   
 - **Caso 2: Usuario organiza sus actividades de bienestar.**
-  - El usuario utiliza la agenda de la plataforma para planificar sesiones de autocuidado, eventos de grupo y recordatorios de actividades de bienestar.
+  - El usuario utiliza la agenda de la plataforma para planificar futuras sesiones de chat.
   
 - **Caso 3: Usuario accede a recursos informativos.**
-  - El usuario navega por el blog de recursos para leer artículos sobre salud mental, ver videos motivacionales y participar en discusiones relacionadas.
+  - El usuario explora el blog de recursos en busca de artículos sobre bienestar emocional, videos motivacionales y consejos prácticos para el manejo del estrés. Además, puede dejar sus comentarios y calificar los artículos para fomentar una conversación empática con otros miembros de la comunidad.
 
 ### 4. **Requerimientos Funcionales**
 - **Registro e Inicio de Sesión:**
