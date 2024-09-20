@@ -1,8 +1,11 @@
 
 ## MindMates - README
 
-![MindMates Logo](https://github.com/No-Country-simulation/c20-46-n-java-react/blob/main/Frontend/src/assets/screenshots/mindmates-login.png)  
-
+![MindMates Landing](https://github.com/No-Country-simulation/c20-46-n-java-react/blob/main/Frontend/src/assets/screenshots/mindmates-landing.png)
+![MindMates Login](https://github.com/No-Country-simulation/c20-46-n-java-react/blob/main/Frontend/src/assets/screenshots/mindmates-login.png)
+![MindMates Chat](https://github.com/No-Country-simulation/c20-46-n-java-react/blob/main/Frontend/src/assets/screenshots/mindmates-chat.png)
+![MindMates Blog](https://github.com/No-Country-simulation/c20-46-n-java-react/blob/main/Frontend/src/assets/screenshots/mindmates-blog.png)
+![MindMates Articulos](https://github.com/No-Country-simulation/c20-46-n-java-react/blob/main/Frontend/src/assets/screenshots/mindmates-articles.png)
 ### 1. **Introducción**
 MindMates es una plataforma digital diseñada para brindar apoyo emocional y psicológico a personas que se sienten aisladas o abrumadas por situaciones difíciles en sus vidas. La aplicación permite a los usuarios conectar con otros que compartan experiencias similares, participar en conversaciones en tiempo real, gestionar sus actividades y acceder a recursos valiosos, todo en un entorno seguro y amigable.
 
