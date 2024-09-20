@@ -53,7 +53,6 @@ export default function Login({onRegisterClick,onChangePasswordClick, handleDial
     }, [showAlert]);
 
     const onSubmitHandler = async (formData)=>{
-        console.log(formData);
 
         try{
             const response = await api.post("/api/auth/autenticar", formData);
@@ -61,7 +60,6 @@ export default function Login({onRegisterClick,onChangePasswordClick, handleDial
             //Save token
             setToken(response.data.token);
             setUser(response.data.user);
-        
         
             handleDialogClose();
             navigate("/chat");

@@ -5,6 +5,7 @@ import Scheduler from "../Scheduler/Scheduler.jsx";
 import Chat from "../Chat/Chat.jsx";
 import { LandingPage } from '../Landing/LandingPage.jsx';
 import AuthProvider from "../../hooks/AuthProvider.jsx";
+import Home from '../Home/Home.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/chat" element={<Chat/>}/>
                     <Route path="/blog" element={<Blog/>}/>
                     <Route path="/scheduler" element={<Scheduler/>}/>
+                    <Route path="/home" element={<Home/>}/>
                 </Routes>
           </AuthProvider>
       </>
