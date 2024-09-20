@@ -40,32 +40,17 @@ MindMates está dirigido a:
   - Permitir a los usuarios buscar y filtrar contenido por categorías y tags.
 
 ### 5. **Uso**
-Una vez que la aplicación esté en funcionamiento, puedes acceder a MindMates desde tu navegador web en `http://localhost:3000`. A continuación, podrás registrarte, iniciar sesión, gestionar tu agenda, navegar por el blog de recursos y comunicarte en tiempo real con otros usuarios.
+Una vez que la aplicación esté en funcionamiento, puedes acceder a MindMates desde tu navegador web en `https://mindmates-production.up.railway.app`. A continuación, podrás registrarte, iniciar sesión, gestionar tu agenda, navegar por el blog de recursos y comunicarte en tiempo real con otros usuarios.
 
-### 6. **Despliegue**
-Para desplegar MindMates en un entorno de producción, sigue estos pasos:
-
-1. **Configura las variables de entorno** en un archivo `.env` similar al que se usa en desarrollo.
-2. **Construye el proyecto para producción:**
-   ```bash
-   npm run build
-   ```
-3. **Configura un servidor web** para servir los archivos estáticos generados.
-4. **Configura la base de datos** MongoDB en un entorno de producción.
-5. **Inicia la aplicación** en el servidor utilizando un proceso administrador como PM2:
-   ```bash
-   pm2 start npm --name "MindMates" -- start
-   ```
-
-### 7. **Equipo**
+### 6. **Equipo**
 | Nombre                      | Rol                   | LinkedIn                                           |
 |-----------------------------|-----------------------|---------------------------------------------------|
-| Diego Jorges                 | FrontEnd Developer    | [LinkedIn Diego](https://www.linkedin.com/in/diegojorges)        |
+| Diego Jorges                 | FullStack Developer    | [LinkedIn Diego](www.linkedin.com/in/diego-agustin-jorges)        |
 | Rodrigo Santillan            | BackEnd Developer     | [LinkedIn Rodrigo](https://www.linkedin.com/in/rodrigosantillan) |
 | Jorge Suarez                 | Tester QA, PM         | [LinkedIn Jorge](https://www.linkedin.com/in/jorgesuareztech)    |
 | Jorge Galleguillos           | Team Leader            | [LinkedIn Jorge G](https://www.linkedin.com/in/jorgeg)           |
 
-### 8. **Instalación y Configuración**
+### 7. **Instalación y Configuración del FrontEnd**
 Para ejecutar MindMates localmente, sigue estos pasos:
 
 1. **Clona el repositorio:**
@@ -75,7 +60,7 @@ Para ejecutar MindMates localmente, sigue estos pasos:
    
 2. **Navega al directorio del proyecto:**
    ```bash
-   cd c20-46-n-java-react
+   cd FrontEnd
    ```
 
 3. **Instala las dependencias:**
@@ -85,17 +70,15 @@ Para ejecutar MindMates localmente, sigue estos pasos:
 
 4. **Configura las variables de entorno:**
    Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
-   ```plaintext
-   MONGODB_URI=<tu_conexion_mongodb>
-   JWT_SECRET=<tu_secreto_jwt>
+   ``` .env
+   VITE_BACKEND_API=<tu_conexion_al_backend>
    ```
 
 5. **Inicia la aplicación:**
    ```bash
-   npm start
+   npm run dev
    ```
-
-### 9. **Contribuciones**
+### 8. **Contribuciones**
 Si deseas contribuir a MindMates, sigue estos pasos:
 
 1. **Fork el repositorio.**
@@ -113,9 +96,9 @@ Si deseas contribuir a MindMates, sigue estos pasos:
    ```
 5. **Abre un Pull Request.**
 
-### 10. **Licencia**
+### 9. **Licencia**
 MindMates se distribuye bajo la Licencia MIT. Para más detalles, consulta el archivo `LICENSE`.
 
-### 11. **Contacto**
+### 10. **Contacto**
 Para cualquier consulta o sugerencia, puedes contactarnos a través de [jorgesuarez.tech@gmail.com](mailto:jorgesuarez.tech@gmail.com).
 
