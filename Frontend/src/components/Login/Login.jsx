@@ -61,7 +61,7 @@ export default function Login({onRegisterClick,onChangePasswordClick, handleDial
             //Save token
             setToken(response.data.token);
             setUser(response.data.user);
-
+        
         
             handleDialogClose();
             navigate("/chat");

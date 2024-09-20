@@ -2,6 +2,11 @@ import { Button, Card, CardActions, CardContent, CardMedia, Rating, Typography }
 import SideBar from "../App/SideBar"
 import CommentIcon from '@mui/icons-material/Comment';
 import Footer from "../App/Footer";
+import { useState } from "react";
+import { useEffect } from "react";
+import api from "../../api/api";
+import { useAuth } from "../../hooks/AuthProvider";
+import { Navigate } from "react-router-dom";
 
 const categories = ['Ansiedad', 'Depresión', 'Apoyo Emocional', 'Terapias', 'Autoestima','Salud Mental',
     'Bienestar', 'Superación Personal', 'Resiliencia','Sociabilizar', 'Motivación']
@@ -26,28 +31,51 @@ const articulos = [
     {
       title: 'Manejo de la Ansiedad',
       description: 'Consejos prácticos para manejar la ansiedad en situaciones estresantes.',
-      image: '/img1.jpeg',
+      image: '/Blog 1.jpg',
       rating: 4,
     },
     {
       title: 'Meditación para el Estrés',
       description: 'Descubre cómo la meditación puede ayudarte a reducir el estrés diario.',
-      image: '/img1.jpeg',
+      image: '/Blog 2.jpg',
       rating: 3,
     },
     {
       title: 'Diario de Gratitud',
       description: 'Cómo mantener un diario de gratitud puede mejorar tu bienestar emocional.',
-      image: '/img1.jpeg',
+      image: '/Blog 3.jpg',
       rating: 5,
     },
   ]
 
 export default function Blog(){
+    const { token} = useAuth();
+    /* const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        // Realiza la solicitud GET al backend
+        const fetchHelloWorld = async () => {
+            try {
+                const response = await api.get('/api/home/hello');
+                setMessage(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setMessage('Error al obtener el mensaje');
+            }
+        };
+
+        fetchHelloWorld();
+    }, []); */
+
+    if (!token) {
+        return <Navigate to="/" replace/>;
+    }
+    
     return(
         <>
             <SideBar/>
             <main className="min-h-screen container px-3 py-8" style={{ marginLeft: '4rem' }}>
+                {/* <h1>{message}</h1> */}
                 <section className="mb-8">
                     <h2 className="text-2xl font-bold mb-4">Categorías</h2>
                     <div className="flex flex-wrap gap-2">
@@ -89,9 +117,8 @@ export default function Blog(){
                         {articulos.map((article, index) => (
                             <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
                                 <CardMedia
-                                    className="px-2 pt-2"
+                                    className="px-2 pt-2 lg:h-[140px] h-auto"
                                     component="img"
-                                    height="140"
                                     image={article.image}
                                     alt={article.title}
                                 />
